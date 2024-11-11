@@ -1,5 +1,7 @@
 // UserDTO class
-class UserDTO {
+import 'serializable.dart';
+
+class UserDTO extends Serializable<UserDTO> {
   final int id;
   final String email;
   final String firstName;
@@ -26,6 +28,7 @@ class UserDTO {
   }
 
   // Method to convert UserDTO to JSON (if needed)
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,

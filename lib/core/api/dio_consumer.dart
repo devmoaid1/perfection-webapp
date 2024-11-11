@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:perfection_webapp/data/models/api_response_model.dart';
 import 'package:perfection_webapp/data/models/serializable.dart';
-import 'package:perfection_webapp/data/models/user_dto.dart';
 
 import '../constants.dart';
 import '../dependencies.dart';
@@ -46,13 +45,15 @@ class DioConsumer implements BaseApi {
   }
 
   @override
-  Future<ApiResponse<T>> get<T>(
+  Future<ApiResponse<T>> get<T extends Serializable<T>>(
       {required String url,
       Object? data,
       Map<String, dynamic>? queryParameters}) {
     return _errorTryCatch(
       () async {
         final response = await dio.get(url, queryParameters: queryParameters);
+        // i want to use fromJson from T and pass it to ApiResponse
+
         return ApiResponse<T>.fromJson(
           json: response.data,
         );
