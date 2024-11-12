@@ -17,6 +17,8 @@ class UsersCubit extends Cubit<UsersState> {
         (failure) => emit(state.copyWith(
             status: Status.error, errorMessage: failure.message)),
         (users) => emit(state.copyWith(
-            status: Status.success, users: [...state.users, ...users])));
+            status: Status.success,
+            users: [...state.users, ...users],
+            currentPage: page++)));
   }
 }
