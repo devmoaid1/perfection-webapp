@@ -16,22 +16,21 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.r),
-            color: Colors.white,
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 30.h),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 80.0,
-                height: 80.0,
-                child: AspectRatio(
-                  aspectRatio: 1,
+    return LayoutBuilder(builder: (context, constraints) {
+      return Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.r),
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 30.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  width: 80.0,
+                  height: 80.0,
                   child: ClipOval(
                     child: AppImage(
                       path: "https://reqres.in/img/faces/1-image.jpg",
@@ -40,43 +39,43 @@ class UserCard extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              20.w.hSpace,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(
-                        user.fullName,
-                        style: Styles.font18Regular,
+                20.w.hSpace,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.contain,
+                        child: Text(
+                          user.fullName,
+                          style: Styles.font18Regular,
+                        ),
                       ),
-                    ),
-                    20.h.vSpace,
-                    FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(
-                        user.email,
-                        style: Styles.font16RegularLightGrey,
+                      20.h.vSpace,
+                      FittedBox(
+                        fit: BoxFit.contain,
+                        child: Text(
+                          user.email,
+                          style: Styles.font16RegularLightGrey,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Align(
-            alignment: Alignment.topRight,
-            child: IndicatorCard(label: user.id.toString())),
-        const Align(
-            alignment: Alignment.bottomRight,
-            child: IndicatorCard(
-              label: 'View Details >>',
-            ))
-      ],
-    );
+          Align(
+              alignment: Alignment.topRight,
+              child: IndicatorCard(label: user.id.toString())),
+          const Align(
+              alignment: Alignment.bottomRight,
+              child: IndicatorCard(
+                label: 'View Details >>',
+              ))
+        ],
+      );
+    });
   }
 }
 
@@ -102,7 +101,10 @@ class IndicatorCard extends StatelessWidget {
           ),
         ),
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-        child: Text(label, style: Styles.font14Regularwhite),
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Text(label, style: Styles.font14Regularwhite),
+        ),
       ),
     );
   }
