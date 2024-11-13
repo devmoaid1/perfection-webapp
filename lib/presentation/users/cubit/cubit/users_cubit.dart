@@ -24,7 +24,7 @@ class UsersCubit extends Cubit<UsersState> {
 
   void loadMore() {
     final page = state.currentPage + 1;
-    print("state is $state");
+
     emit(state.copyWith(
       status: Status.loading,
     ));

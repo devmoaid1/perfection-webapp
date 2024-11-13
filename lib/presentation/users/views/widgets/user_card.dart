@@ -6,6 +6,7 @@ import 'package:perfection_webapp/core/widgets/custom_network_image.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/styles.dart';
 import '../../../../domain/entities/user_entity.dart';
+import '../../../user_details/views/user_details_view.dart';
 
 class UserCard extends StatelessWidget {
   final UserEntity user;
@@ -33,15 +34,7 @@ class UserCard extends StatelessWidget {
                   height: 100.w,
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: ClipOval(
-                      clipBehavior: Clip.antiAlias,
-                      child: AppImage(
-                        path: user.avatarUrl,
-                        // width: 200.w,
-                        // height: 50.w,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    child: CircularImage(avatarUrl: user.avatarUrl),
                   ),
                 ),
                 20.w.hSpace,
@@ -73,14 +66,36 @@ class UserCard extends StatelessWidget {
           Align(
               alignment: Alignment.topRight,
               child: IndicatorCard(label: user.id.toString())),
-          const Align(
+          Align(
               alignment: Alignment.bottomRight,
               child: IndicatorCard(
                 label: 'View Details >>',
+                onTap: () => Navigator.of(context)
+                    .pushNamed(UserDetailsView.routeName, arguments: user),
               ))
         ],
       );
     });
+  }
+}
+
+class CircularImage extends StatelessWidget {
+  const CircularImage({
+    super.key,
+    required this.avatarUrl,
+  });
+
+  final String avatarUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipOval(
+      clipBehavior: Clip.antiAlias,
+      child: AppImage(
+        path: avatarUrl,
+        fit: BoxFit.cover,
+      ),
+    );
   }
 }
 

@@ -5,7 +5,6 @@ import 'package:perfection_webapp/core/helpers/extensions/spaces.dart';
 import 'package:perfection_webapp/presentation/users/cubit/cubit/users_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/dependencies.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/styles.dart';
 import '../../../../domain/entities/user_entity.dart';
@@ -43,75 +42,89 @@ class UsersGridSection extends StatelessWidget {
         builder: (context, state) {
           switch (state.status) {
             case Status.loading:
-              return Skeletonizer(
-                enabled: true,
-                child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: 6,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 16 / 9,
-                        crossAxisCount: crossAxisCount,
-                        crossAxisSpacing: 20.w,
-                        mainAxisSpacing: 20.h),
-                    itemBuilder: (context, index) {
-                      final user = UserEntity(
-                          id: index,
-                          email: 'moaidmohamed123@gmail.com',
-                          avatarUrl: 'https://reqres.in/img/faces/1-image.jpg',
-                          fullName: 'Moaid Mohamed');
-                      return UserCard(
-                        user: user,
-                      );
-                    }),
-              );
+              return _buildLoadingState(crossAxisCount);
             case Status.success:
-              return Column(
-                children: [
-                  GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.users.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 16 / 9,
-                          crossAxisCount: crossAxisCount,
-                          crossAxisSpacing: 20.w,
-                          mainAxisSpacing: 20.h),
-                      itemBuilder: (context, index) {
-                        final user = state.users[index];
-                        return UserCard(
-                          user: user,
-                        );
-                      }),
-                  50.h.vSpace,
-                  GestureDetector(
-                      onTap: () {
-                        final usersCubit = BlocProvider.of<UsersCubit>(context);
-
-                        usersCubit.loadMore();
-                      },
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Load more>>',
-                          style: Styles.font14Regularwhite
-                              .copyWith(color: AppColors.primaryColor),
-                        ),
-                      ))
-                ],
-              );
+              return _buildSuccessState(state, crossAxisCount, context);
             case Status.error:
-              return Center(
-                child: Text(
-                  state.errorMessage!,
-                  style: Styles.font18Regular,
-                ),
-              );
+              return _buildErrorState(state);
           }
         },
       );
     });
+  }
+
+  Center _buildErrorState(UsersState state) {
+    return Center(
+      child: Text(
+        state.errorMessage!,
+        style: Styles.font18Regular,
+      ),
+    );
+  }
+
+  Column _buildSuccessState(
+      UsersState state, int crossAxisCount, BuildContext context) {
+    return Column(
+      children: [
+        GridView.builder(
+            shrinkWrap: true,
+            itemCount: state.users.length,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 16 / 9,
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: 20.w,
+                mainAxisSpacing: 20.h),
+            itemBuilder: (context, index) {
+              final user = state.users[index];
+              return UserCard(
+                user: user,
+                key: ValueKey(user.id),
+              );
+            }),
+        50.h.vSpace,
+        GestureDetector(
+            onTap: () {
+              final usersCubit = BlocProvider.of<UsersCubit>(context);
+
+              usersCubit.loadMore();
+            },
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Load more>>',
+                style: Styles.font14Regularwhite
+                    .copyWith(color: AppColors.primaryColor),
+              ),
+            ))
+      ],
+    );
+  }
+
+  Skeletonizer _buildLoadingState(int crossAxisCount) {
+    return Skeletonizer(
+      enabled: true,
+      child: GridView.builder(
+          shrinkWrap: true,
+          itemCount: 6,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 16 / 9,
+              crossAxisCount: crossAxisCount,
+              crossAxisSpacing: 20.w,
+              mainAxisSpacing: 20.h),
+          itemBuilder: (context, index) {
+            final user = UserEntity(
+                id: index,
+                email: 'moaidmohamed123@gmail.com',
+                avatarUrl: 'https://reqres.in/img/faces/1-image.jpg',
+                fullName: 'Moaid Mohamed');
+            return UserCard(
+              user: user,
+            );
+          }),
+    );
   }
 }
