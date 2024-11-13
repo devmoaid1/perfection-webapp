@@ -21,7 +21,7 @@ class PerfectionApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Poppins',
           scaffoldBackgroundColor: AppColors.offWhite,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,

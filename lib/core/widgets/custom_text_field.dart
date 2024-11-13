@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:perfection_webapp/core/theme/styles.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -18,6 +18,7 @@ class CustomTextField extends StatelessWidget {
         style: Styles.font16RegularLightGrey,
         decoration: InputDecoration(
           border: buildEnabledBorder(context),
+          enabledBorder: buildEnabledBorder(context),
           contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         ));
   }
