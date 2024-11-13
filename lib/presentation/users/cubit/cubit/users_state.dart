@@ -1,7 +1,7 @@
 part of 'users_cubit.dart';
 
 // Enum to represent different status states
-enum Status { initial, error, loading, success }
+enum Status { error, loading, success }
 
 class UsersState extends Equatable {
   final Status status;
@@ -11,7 +11,7 @@ class UsersState extends Equatable {
   final String? errorMessage;
 
   const UsersState({
-    this.status = Status.initial,
+    this.status = Status.loading,
     this.users = const [],
     this.currentPage = 1,
     this.errorMessage,

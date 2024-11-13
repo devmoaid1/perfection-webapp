@@ -24,9 +24,11 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.6
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.10+1
   get_it: ^8.0.2
+  skeletonizer: ^1.4.2
 
 dev_dependencies:
   flutter_lints: ^4.0.0

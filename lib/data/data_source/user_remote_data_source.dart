@@ -16,7 +16,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<List<UserDTO>> getUsers({required int page}) async {
     final ApiResponse<UserDTO> response = await _baseApi.get<UserDTO>(
-        url: "${AppStrings.baseUrl}/users", queryParameters: {"page": page});
+        fromJson: UserDTO.fromJson,
+        url: "${AppStrings.baseUrl}users",
+        queryParameters: {"page": page});
     final users = response.data.map((user) => user).toList();
     return users;
   }

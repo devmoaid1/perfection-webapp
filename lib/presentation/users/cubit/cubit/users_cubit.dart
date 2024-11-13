@@ -19,6 +19,15 @@ class UsersCubit extends Cubit<UsersState> {
         (users) => emit(state.copyWith(
             status: Status.success,
             users: [...state.users, ...users],
-            currentPage: page++)));
+            currentPage: page)));
+  }
+
+  void loadMore() {
+    final page = state.currentPage + 1;
+    print("state is $state");
+    emit(state.copyWith(
+      status: Status.loading,
+    ));
+    fetchUsers(page);
   }
 }

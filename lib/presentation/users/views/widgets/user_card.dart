@@ -28,14 +28,19 @@ class UserCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  width: 80.0,
-                  height: 80.0,
-                  child: ClipOval(
-                    child: AppImage(
-                      path: "https://reqres.in/img/faces/1-image.jpg",
-                      fit: BoxFit
-                          .cover, // استخدم cover لضمان تناسب الصورة داخل الدائرة
+                SizedBox(
+                  width: 100.w,
+                  height: 100.w,
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: ClipOval(
+                      clipBehavior: Clip.antiAlias,
+                      child: AppImage(
+                        path: user.avatarUrl,
+                        // width: 200.w,
+                        // height: 50.w,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),

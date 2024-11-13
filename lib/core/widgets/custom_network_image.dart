@@ -23,6 +23,8 @@ class AppImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: path ?? '',
       fit: fit,
+      height: height,
+      width: width,
       progressIndicatorBuilder: (context, url, progress) =>
           const CircularProgressIndicator(),
       errorWidget: (context, url, error) => Image.asset(
